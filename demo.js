@@ -6,10 +6,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 let currentBalance = {
-  'EOS': {
-    symbol: 'EOS',
-    name: 'EOS Token',
-    amount: 20,
+  'EOS1': {
+    symbol: 'EOS1',
+    name: 'EOS1 Token',
+    amount: '11.1111',
+    decimals: 4
+  },
+  'EOS2': {
+    symbol: 'EOS2',
+    name: 'EOS2 Token',
+    amount: '22.2222',
     decimals: 4
   }
 }
@@ -50,6 +56,6 @@ app.post('/transfer', async (request, response) => {
   response.json({ ok: true });
 })
 
-app.listen(3001);
+app.listen(3043);
 
 console.log('listening...');

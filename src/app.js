@@ -16,8 +16,6 @@ const arrayBalance = (balance) => {
 }
 
 app.post('/transfer', async (request, response) => {
-  console.log(request.body);
-
   let { symbol, amount, amountWithSymbol, from, to } = request.body;
 
   if (!amount || !symbol) {
@@ -29,8 +27,8 @@ app.post('/transfer', async (request, response) => {
   response.json(transaction);
 })
 
-app.get('/balance', async (request, response) => {
-  const balance = await wallet.balance();
+app.get('/tokens', async (request, response) => {
+  const balance = await wallet.tokens();
 
   response.json(arrayBalance(balance));
 })

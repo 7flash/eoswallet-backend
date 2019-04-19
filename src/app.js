@@ -16,9 +16,15 @@ const arrayBalance = (balance) => {
 }
 
 app.post('/transfer', async (request, response) => {
-  const { symbol, amount, beneficiary } = request.body;
+  console.log(request.body);
 
-  const transaction = await wallet.transfer({ symbol, amount, beneficiary });
+  let { symbol, amount, amountWithSymbol, from, to } = request.body;
+
+  if (!amount || !symbol) {
+    [symbol, amount] = amountWithSymbol.split(' ');
+  }
+
+  const transaction = await wallet.transfer({ symbol, amount, from, to });
 
   response.json(transaction);
 })

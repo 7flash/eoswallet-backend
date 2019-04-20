@@ -19,7 +19,7 @@ app.post('/transfer', async (request, response) => {
   let { symbol, amount, amountWithSymbol, from, to } = request.body;
 
   if (!amount || !symbol) {
-    [symbol, amount] = amountWithSymbol.split(' ');
+    [amount, symbol] = amountWithSymbol.split(' ');
   }
 
   const transaction = await wallet.transfer({ symbol, amount, from, to });

@@ -60,7 +60,7 @@ const tokenAmount = (account, symbol) => Number(R.path([account, 'tokens', symbo
 const tokenDecimals = (symbol) => Number(R.path([symbol, 'decimals'], tokensInfo));
 
 const decreaseBalance = (symbol, value, account) => {
-  const decimals = tokenDecimals(symbol);
+    const decimals = tokenDecimals(symbol);
   const amount = Number(tokenAmount(account, symbol) - Number(value)).toFixed(decimals);
 
   return changeTokenBalance(account, symbol, amount);
@@ -88,12 +88,16 @@ const addHistoryItems = ({ from, to, amount, symbol }) => {
   }
 }
 
+const txMock = () => { txId: 'random_tx_id' };
+
 const transfer = ({ symbol, amount, from, to }) => {
   updateState([
     decreaseBalance(symbol, amount, from),
     increaseBalance(symbol, amount, to),
     // addHistoryItems({ from, to, amount, symbol }),
   ])
+
+  return txMock();
 }
 
 const tokens = (account) => {

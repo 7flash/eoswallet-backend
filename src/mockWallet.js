@@ -35,10 +35,10 @@ let state = {
 const convertToUsd = (symbol, amount) => {
   switch (symbol) {
     case 'EOS1':
-      return Number(amount) * 10
+      return Number(Number(amount) * 10).toFixed(2);
 
     case 'EOS2':
-      return Number(amount) * 5
+      return Number(Number(amount) * 5).toFixed(2);
   }
 }
 

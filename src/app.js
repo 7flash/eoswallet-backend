@@ -28,7 +28,7 @@ app.post('/transfer', async (request, response) => {
 })
 
 app.get('/tokens', async (request, response) => {
-  const balance = await wallet.tokens();
+  const balance = await wallet.tokens('sevenflash12');
 
   response.json(arrayBalance(balance));
 })

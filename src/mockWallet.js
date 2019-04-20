@@ -88,14 +88,14 @@ const addHistoryItems = ({ from, to, amount, symbol }) => {
   }
 }
 
-const txMock = () => { txId: 'random_tx_id' };
+const txMock = () => ({ txId: '67bfe28e567bbf9c91ca10b773debe8687ccd829b3e449f3bc1089499a150a4a' });
 
 const transfer = ({ symbol, amount, from, to }) => {
   updateState([
     decreaseBalance(symbol, amount, from),
     increaseBalance(symbol, amount, to),
     // addHistoryItems({ from, to, amount, symbol }),
-  ])
+  ]);
 
   return txMock();
 }

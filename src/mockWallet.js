@@ -1,32 +1,31 @@
 const R = require("ramda");
 
 const tokensInfo = {
-  'EOS1': {
-    symbol: 'EOS1',
-    name: 'EOS1 Token',
+  'EOS': {
+    symbol: 'EOS',
+    name: 'EOS Token',
     decimals: 4,
   },
-  'EOS2': {
-    symbol: 'EOS2',
-    name: 'EOS2 Token',
+  'JUNGLE': {
+    symbol: 'JUNGLE',
+    name: 'JUNGLE Token',
     decimals: 4
   }
 }
 
+const defaultTokens = {
+  'EOS': '1.0000',
+  'JUNGLE': '1000.0000'
+}
+
 let state = {
   'sevenflash12': {
-    tokens: {
-      'EOS1': '10.0000',
-      'EOS2': '20.0000'
-    },
+    tokens: defaultTokens,
 
     history: []
   },
   'sevenflash13': {
-    tokens: {
-      'EOS1': '10.0000',
-      'EOS2': '20.0000'
-    },
+    tokens: defaultTokens,
 
     history: []
   }
@@ -88,19 +87,40 @@ const addHistoryItems = ({ from, to, amount, symbol }) => {
   }
 }
 
-const txMock = () => ({ txId: '67bfe28e567bbf9c91ca10b773debe8687ccd829b3e449f3bc1089499a150a4a' });
 
 const transfer = ({ symbol, amount, from, to }) => {
+  if (!tokensInfo[symbol]) {
+    return { txId: 'token does not exists' }
+  }
+
+  if (!state[from]) {
+    state[from] = {
+      tokens: defaultTokens
+    }
+  }
+
+  if (!state[to]) {
+    state[to] = {
+      tokens: defaultTokens
+    }
+  }
+
   updateState([
     decreaseBalance(symbol, amount, from),
     increaseBalance(symbol, amount, to),
     // addHistoryItems({ from, to, amount, symbol }),
   ]);
 
-  return txMock();
+  return { txId: `${amount} ${symbol} transfered from ${from} to ${to}`}
 }
 
 const tokens = (account) => {
+  if (!state[account]) {
+    state[account] = {
+      tokens: defaultTokens
+    }
+  }
+
   return R.compose(
     R.mapObjIndexed((amount, symbol) => ({
       ...tokensInfo[symbol],
